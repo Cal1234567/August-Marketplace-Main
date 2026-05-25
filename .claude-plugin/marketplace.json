@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-schema.json",
+  "name": "august-group",
+  "description": "Internal skills for August Group — investment research, call analysis, and daily workflows",
+  "version": "1.0.0",
+  "owner": {
+    "name": "August Group"
+  },
+  "plugins": [
+    {
+      "name": "dd-research-plugin",
+      "displayName": "DD Research",
+      "source": "./plugins/dd-research-plugin",
+      "description": "Run deep diligence research on a company and generate DDQ questions from findings",
+      "version": "1.0.0",
+      "author": { "name": "August Group" },
+      "category": "Investments",
+      "tags": ["investments", "research", "due-diligence", "ddq"]
+    },
+    {
+      "name": "call-transcript-plugin",
+      "displayName": "Call Transcript Analyzer",
+      "source": "./plugins/call-transcript-plugin",
+      "description": "Cross-reference call transcripts against diligence questions",
+      "version": "1.0.0",
+      "author": { "name": "August Group" },
+      "category": "Investments",
+      "tags": ["investments", "transcripts", "call-analysis"]
+    },
+    {
+      "name": "daily-summary-plugin",
+      "displayName": "Daily Summary",
+      "source": "./plugins/daily-summary-plugin",
+      "description": "End-of-day debrief pulling Teams, Outlook calendar, and email",
+      "version": "1.0.0",
+      "author": { "name": "August Group" },
+      "category": "Productivity",
+      "tags": ["workflow", "summary", "daily", "debrief"]
+    },
+    {
+      "name": "weekly-summary-plugin",
+      "displayName": "Weekly Summary",
+      "source": "./plugins/weekly-summary-plugin",
+      "description": "Weekly recap of activities grouped by topic with open loops",
+      "version": "1.0.0",
+      "author": { "name": "August Group" },
+      "category": "Productivity",
+      "tags": ["workflow", "summary", "weekly", "recap"]
+    }
+  ]
+}

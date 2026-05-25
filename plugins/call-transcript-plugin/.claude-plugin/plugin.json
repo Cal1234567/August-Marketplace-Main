@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "call-transcript-plugin",
+  "displayName": "Call Transcript Analyzer",
+  "version": "1.0.0",
+  "description": "Cross-reference call transcripts against diligence questions",
+  "author": { "name": "August Group" },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

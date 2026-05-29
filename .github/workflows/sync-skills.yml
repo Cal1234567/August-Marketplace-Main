@@ -24,5 +24,6 @@ jobs:
       - name: Sync marketplace.json -> Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # Service-role / secret key is stored in the repo secret named SKILL_SYNC.
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SKILL_SYNC }}
         run: node scripts/sync-skills.mjs

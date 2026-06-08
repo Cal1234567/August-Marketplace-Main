@@ -3,7 +3,7 @@
   "name": "say-back-plugin",
   "displayName": "Say Back",
   "version": "1.0.0",
-  "description": ">",
+  "description": "Makes the agent state its plan before acting — the user confirms before any action is taken.",
   "author": {
     "name": "August Group"
   },

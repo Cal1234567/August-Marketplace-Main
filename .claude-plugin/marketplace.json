@@ -8,23 +8,6 @@
   },
   "plugins": [
     {
-      "name": "dd-research-plugin",
-      "displayName": "DD Research",
-      "source": "./plugins/dd-research-plugin",
-      "description": "Run deep diligence research on a company and generate DDQ questions from findings",
-      "version": "1.0.0",
-      "author": {
-        "name": "August Group"
-      },
-      "category": "Investments",
-      "tags": [
-        "investments",
-        "research",
-        "due-diligence",
-        "ddq"
-      ]
-    },
-    {
       "name": "call-transcript-plugin",
       "displayName": "Call Transcript Analyzer",
       "source": "./plugins/call-transcript-plugin",
@@ -114,7 +97,7 @@
       "name": "say-back-plugin",
       "displayName": "Say Back",
       "source": "./plugins/say-back-plugin",
-      "description": ">",
+      "description": "Makes the agent state its plan before acting — the user confirms before any action is taken.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"

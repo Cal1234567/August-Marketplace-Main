@@ -42,7 +42,7 @@ $frontmatter = $fmMatch.Groups[1].Value
 # Extract description from frontmatter if not overridden
 if (-not $Description) {
     # Handle multiline >- block
-    $multilineMatch = [regex]::Match($frontmatter, '(?s)description:\s*>-\s*\r?\n((?:[ \t]+.+\r?\n?)+)')
+    $multilineMatch = [regex]::Match($frontmatter, '(?s)description:\s*>-?\s*\r?\n((?:[ \t]+.+\r?\n?)+)')
     if ($multilineMatch.Success) {
         $Description = ($multilineMatch.Groups[1].Value -split '\r?\n' |
             ForEach-Object { $_.Trim() } |

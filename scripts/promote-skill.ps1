@@ -55,12 +55,22 @@ if (-not $Description) {
     $Description = $Description -replace '^\(PERSONAL\)\s*', ''
 }
 
-# --- Derive slug and display name ---
+# --- Derive slug, display name, and subdirectory ---
 $Slug        = $Name -replace '^personal-', ''
 $PluginName  = "$Slug-plugin"
 $DisplayName = (Get-Culture).TextInfo.ToTitleCase(($Slug -replace '-', ' '))
 
-$PluginDir   = "$RepoRoot\plugins\$PluginName"
+# Map category to subfolder; anything unrecognised goes into productivity
+$SubDir = switch ($Category) {
+    "Investments"           { "investments" }
+    "Legal & Compliance"    { "legal" }
+    "Advisory"              { "advisory" }
+    "Lifestyle & Marketing" { "lifestyle-marketing" }
+    "Business Operations"   { "business-operations" }
+    default                 { "productivity" }
+}
+
+$PluginDir   = "$RepoRoot\plugins\$SubDir\$PluginName"
 $ManifestDir = "$PluginDir\.claude-plugin"
 $SkillDir    = "$PluginDir\skills\$Slug"
 
@@ -96,7 +106,7 @@ $tagArray    = @($Tags -split "," | ForEach-Object { $_.Trim() } | Where-Object 
 $entry = [ordered]@{
     name        = $PluginName
     displayName = $DisplayName
-    source      = "./plugins/$PluginName"
+    source      = "./plugins/$SubDir/$PluginName"
     description = $Description
     version     = "1.0.0"
     author      = [ordered]@{ name = "August Group" }

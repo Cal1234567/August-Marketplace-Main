@@ -10,7 +10,7 @@
     {
       "name": "call-transcript-plugin",
       "displayName": "Call Transcript Analyzer",
-      "source": "./plugins/call-transcript-plugin",
+      "source": "./plugins/investments/call-transcript-plugin",
       "description": "Cross-reference call transcripts against diligence questions",
       "version": "1.0.0",
       "author": {
@@ -26,7 +26,7 @@
     {
       "name": "call-notes-plugin",
       "displayName": "Call Notes (Word)",
-      "source": "./plugins/call-notes-plugin",
+      "source": "./plugins/investments/call-notes-plugin",
       "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template",
       "version": "1.0.0",
       "author": {
@@ -44,7 +44,7 @@
     {
       "name": "daily-summary-plugin",
       "displayName": "Daily Summary",
-      "source": "./plugins/daily-summary-plugin",
+      "source": "./plugins/productivity/daily-summary-plugin",
       "description": "End-of-day debrief pulling Teams, Outlook calendar, and email",
       "version": "1.0.0",
       "author": {
@@ -61,7 +61,7 @@
     {
       "name": "weekly-summary-plugin",
       "displayName": "Weekly Summary",
-      "source": "./plugins/weekly-summary-plugin",
+      "source": "./plugins/productivity/weekly-summary-plugin",
       "description": "Weekly recap of activities grouped by topic with open loops",
       "version": "1.0.0",
       "author": {
@@ -78,7 +78,7 @@
     {
       "name": "check-in-plugin",
       "displayName": "Check In",
-      "source": "./plugins/check-in-plugin",
+      "source": "./plugins/productivity/check-in-plugin",
       "description": "Mid-task gut check on whether the current path is the right one, with independent critic subagents and clearly laid-out alternatives",
       "version": "1.0.0",
       "author": {
@@ -96,7 +96,7 @@
     {
       "name": "say-back-plugin",
       "displayName": "Say Back",
-      "source": "./plugins/say-back-plugin",
+      "source": "./plugins/productivity/say-back-plugin",
       "description": "Makes the agent state its plan before acting — the user confirms before any action is taken.",
       "version": "1.0.0",
       "author": {

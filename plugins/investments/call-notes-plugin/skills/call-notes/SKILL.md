@@ -27,17 +27,47 @@ hierarchy and highlight density.
 > **`call-transcript`** skill. Both can trigger on "a transcript was shared" — pick by the
 > deliverable. When unsure, ask.
 
+## Output modes
+
+This skill runs in two modes depending on the environment:
+
+- **Document mode** — produces a `.docx` Word briefing using the bundled Python builder and
+  August Group house template. Full styling, logo header, named paragraph styles.
+- **Notes mode** — produces formatted notes directly as a response in markdown. Same structure,
+  same hierarchy, same highlighted takeaways. No file I/O or Python required. Used in Cowork
+  and any environment where Python is unavailable.
+
 ## How it works (pipeline)
 
-1. **Read the transcript** and analyze it.
-2. **Identify the call type** (see Section Templates below) and plan the sections.
-3. **Write a JSON spec** describing the document as an ordered list of styled paragraph blocks.
-4. **Run the bundled builder** (`scripts/build_notes.py`), which clones the template and renders
-   the blocks. It writes correct UTF-8 (no `â€"` mojibake) and XML-escapes text for you.
-5. **Report the saved path** and offer to adjust.
+1. **Detect mode:**
+   - Try running `python --version` (or `python3 --version`).
+   - If Python is available → **Document mode**.
+   - If Python is NOT available (Cowork, or machine without Python) → **Notes mode**.
+   - If Python is missing but `winget` is available, offer to install it:
+     `winget install Python.Python.3.12 --silent` then `pip install python-docx`.
+     If the user declines or winget is unavailable, proceed in Notes mode.
+
+2. **Read the transcript** and analyze it.
+
+3. **Identify the call type** (see Section Templates below) and plan the sections.
+
+4. **[Document mode]** Write a JSON spec → run `scripts/build_notes.py` → save `.docx` → report path.
+
+   **[Notes mode]** Write formatted notes directly as a markdown response using this mapping:
+   - `# Call Name` → title
+   - `## Section` → major section (BSubheader equivalent)
+   - `### Sub-section` → sub-section (CSubheader — use for 2+ distinct topics within a B section)
+   - `#### Detail` → second-level sub-section (DSubheader)
+   - `**highlighted figure**` → inline bold for key numbers, dates, metrics, amounts
+   - `> **Critical takeaway text**` → blockquote for the 2–3 most important facts
+   - Standard bullet points for all content
+   - Acronym table at the end (two columns: Term | Definition)
+
+   Apply exactly the same voice rules, Snapshot formula, section templates, and highlight
+   density as Document mode — the only difference is the output format.
 
 Do NOT ask for outline approval or any confirmation before building. When a transcript is
-provided and this skill is triggered, go straight to generating the doc.
+provided and this skill is triggered, go straight to generating the notes.
 
 ## Before you start
 
@@ -142,22 +172,33 @@ Next Steps → Appendix
 3. **No "August Group profile" section.** Ever.
 4. **Appendix** always last.
 
-### The three-level header hierarchy — use it
+### The three-level header hierarchy — use it every time
 
-The template has B → C → D headers. A flat document with only `BSubheader` is wrong.
+The template has B → C → D headers. **A flat document with only `BSubheader` is wrong.**
+Every substantial section should go at least B → C. Most should go B → C → D.
 
 | `style` id   | Level | Visual | Use for |
 |--------------|-------|--------|---------|
 | `ATitle`     | —     | Large bold | Document title. Exactly one. |
 | `BSubheader` | 1     | Bold, solid ruled underline | Major sections (Snapshot, Technology & IP, etc.) |
-| `CSubheader` | 2     | Gold, dotted underline | Sub-sections within a B section. Use when a B section covers 2+ distinct topics. |
-| `DSubheader` | 3     | Dark underline | Sub-sections within a C section. Use when a C section itself breaks into 2+ distinct sub-topics. |
+| `CSubheader` | 2     | Gold, dotted underline | Sub-sections within a B section. Any B with 2+ distinct topics gets C headers. |
+| `DSubheader` | 3     | Dark underline | Sub-sections within a C section. Any C with 2+ distinct topics gets D headers. |
 | `EParagraph` | —     | Normal text | Rare prose or caveat. |
 | `FBullet`    | —     | Bullet point | Nearly all content. Use `level` (1, 2) for sub-bullets. |
 
-**Rule of thumb:** if a B section has more than ~4 bullets on different sub-topics, split into C
-sub-sections. If a C section has more than ~3 bullets on different sub-topics, split into D
-sub-sections. Never go B → bullets when B → C → D → bullets would be clearer.
+**Mandatory examples — these must always use D headers, never just bullets:**
+
+- **Technology & IP** (B) → **Golf Zone Platform** (C) → **Technology Approach** (D) + **Korean Market Scale** (D)
+- **Technology & IP** (B) → **IP & Competitive Moat** (C) → **Patent Portfolio** (D) + **Physical Differentiation** (D)
+- **Go-to-Market & Rollout** (B) → **Site Strategy** (C) → **Site 1 — [City]** (D) + **Other Markets** (D)
+- **Go-to-Market & Rollout** (B) → **Marketing & Distribution** (C) → **Network Partnerships** (D) + **Content & Athlete Strategy** (D)
+- **Cap Table & Deal Terms** (B) → **Round Structure** (C) + **Ownership & Governance** (C) — each C may then split to D
+- **Vessel Status & Engineering** (B) → **Viceroy** (C) → **Timeline & Slippage** (D) + **OTA Deadline** (D)
+
+**The test before writing any C section:** does this C have 2+ distinct named sub-topics?
+If yes → add D headers. If no → bullets are fine.
+
+**Never** leave a C section with 4+ bullets on obviously different sub-topics — break them into D.
 
 ### Write in bullets, not paragraphs
 One idea per bullet. Push supporting detail into sub-bullets (`"level": 1`, `2`) rather than long

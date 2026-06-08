@@ -3,7 +3,7 @@
   "name": "call-notes-plugin",
   "displayName": "Call Notes",
   "version": "1.0.0",
-  "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template.",
+  "description": "Analyzes a call or meeting transcript (.txt) and produces a structured Word briefing in the August Group house templa...",
   "author": {
     "name": "August Group"
   },

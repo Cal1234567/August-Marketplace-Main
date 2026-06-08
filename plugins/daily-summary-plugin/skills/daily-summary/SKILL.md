@@ -1,6 +1,7 @@
 ---
 name: daily-summary
-description: Runs a full daily debrief for the user. Pulls Teams chats, Outlook calendar, and Outlook email from today, then delivers a two-part report — (1) clean bullet summary of what happened, (2) open loops: unresolved threads, unanswered questions, unconfirmed action items, rescheduled meetings with no new time, pending replies. Trigger whenever the user asks for a daily summary, end-of-day recap, daily debrief, what happened today, what's still open, what's pending, or anything like "summarize my day." Also trigger if they say "open loops", "what's hanging", or "catch me up on today."
+description: >-
+  Runs a full daily debrief for the user. Pulls Teams chats, Outlook calendar, and Outlook email from today, then delivers a two-part report — (1) clean bullet summary of what happened, (2) open loops: unresolved threads, unanswered questions, unconfirmed action items, rescheduled meetings with no new time, pending replies. Trigger whenever the user asks for a daily summary, end-of-day recap, daily debrief, what happened today, what's still open, what's pending, or anything like "summarize my day." Also trigger if they say "open loops", "what's hanging", or "catch me up on today."
 ---
 
 Spawn a single subagent with this prompt:

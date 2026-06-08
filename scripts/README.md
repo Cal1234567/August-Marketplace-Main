@@ -8,22 +8,39 @@ plugin entry into the site's Supabase `skills` table. The site updates within
 
 ## Adding a skill (the whole workflow)
 
-1. Add the plugin folder under `plugins/<slug>-plugin/` (the usual plugin files).
-2. Add an entry to `.claude-plugin/marketplace.json` `plugins` array:
+Skills live in `~/.claude/skills/` first — that's the source of truth. They're
+instantly available in Claude Code with no install step. When you're ready to
+publish a skill to the August AI site, promote it into this repo.
 
-   ```json
-   {
-     "name": "my-skill-plugin",
-     "displayName": "My Skill",
-     "source": "./plugins/my-skill-plugin",
-     "description": "One-line description shown on the site.",
-     "version": "1.0.0",
-     "author": { "name": "August Group" },
-     "category": "Investments",
-     "tags": ["research", "analysis"]
-   }
-   ```
-3. Commit and push to `main`.
+**Step 1 — Create the skill**
+
+```powershell
+.\scripts\new-skill.ps1 -Name "my-skill" -Description "Does X when user says Y"
+```
+
+Edit `~/.claude/skills/my-skill/SKILL.md`. Changes take effect immediately.
+
+**Step 2 — Promote to the site when ready**
+
+```powershell
+.\scripts\promote-skill.ps1 -Name "my-skill" -Category "Investments" -Tags "research,analysis"
+```
+
+This creates the plugin wrapper in `plugins/my-skill-plugin/` and upserts the
+`marketplace.json` entry. Safe to re-run — updates the plugin in place if it
+already exists.
+
+**Step 3 — Publish**
+
+```powershell
+git add . && git commit -m "promote my-skill" && git push origin main
+```
+
+The GitHub Action picks it up and the site updates within ~30 seconds.
+
+**Updating an existing promoted skill**
+
+Edit `~/.claude/skills/<name>/SKILL.md`, then re-run `promote-skill.ps1` and push.
 
 That's it. The skill appears on the site with:
 - **Name** ← `displayName`

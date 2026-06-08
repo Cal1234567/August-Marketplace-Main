@@ -1,6 +1,7 @@
 ---
 name: weekly-summary
-description: Runs a full weekly debrief for the user. Pulls Teams chats, Outlook calendar, and Outlook email from the current week (Monday through today), then delivers a two-part report — (1) clean bullet summary of what happened grouped by topic, (2) open loops: unresolved threads, unanswered questions, unconfirmed action items, rescheduled meetings with no new time, pending replies. Trigger whenever the user asks for a weekly summary, week recap, weekly debrief, what happened this week, what's still open this week, or anything like "summarize my week." Also trigger if they say "weekly open loops", "what's hanging this week", or "catch me up on the week."
+description: >-
+  Runs a full weekly debrief for the user. Pulls Teams chats, Outlook calendar, and Outlook email from the current week (Monday through today), then delivers a two-part report — (1) clean bullet summary of what happened grouped by topic, (2) open loops: unresolved threads, unanswered questions, unconfirmed action items, rescheduled meetings with no new time, pending replies. Trigger whenever the user asks for a weekly summary, week recap, weekly debrief, what happened this week, what's still open this week, or anything like "summarize my week." Also trigger if they say "weekly open loops", "what's hanging this week", or "catch me up on the week."
 ---
 
 Spawn a single subagent with this prompt:

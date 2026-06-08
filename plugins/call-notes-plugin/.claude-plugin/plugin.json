@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "call-notes-plugin",
+  "displayName": "Call Notes (Word)",
+  "version": "1.0.0",
+  "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template",
+  "author": { "name": "August Group" },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

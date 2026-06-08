@@ -13,9 +13,16 @@
       "source": "./plugins/dd-research-plugin",
       "description": "Run deep diligence research on a company and generate DDQ questions from findings",
       "version": "1.0.0",
-      "author": { "name": "August Group" },
+      "author": {
+        "name": "August Group"
+      },
       "category": "Investments",
-      "tags": ["investments", "research", "due-diligence", "ddq"]
+      "tags": [
+        "investments",
+        "research",
+        "due-diligence",
+        "ddq"
+      ]
     },
     {
       "name": "call-transcript-plugin",
@@ -23,9 +30,33 @@
       "source": "./plugins/call-transcript-plugin",
       "description": "Cross-reference call transcripts against diligence questions",
       "version": "1.0.0",
-      "author": { "name": "August Group" },
+      "author": {
+        "name": "August Group"
+      },
       "category": "Investments",
-      "tags": ["investments", "transcripts", "call-analysis"]
+      "tags": [
+        "investments",
+        "transcripts",
+        "call-analysis"
+      ]
+    },
+    {
+      "name": "call-notes-plugin",
+      "displayName": "Call Notes (Word)",
+      "source": "./plugins/call-notes-plugin",
+      "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Investments",
+      "tags": [
+        "investments",
+        "transcripts",
+        "call-analysis",
+        "word",
+        "notes"
+      ]
     },
     {
       "name": "daily-summary-plugin",
@@ -33,9 +64,16 @@
       "source": "./plugins/daily-summary-plugin",
       "description": "End-of-day debrief pulling Teams, Outlook calendar, and email",
       "version": "1.0.0",
-      "author": { "name": "August Group" },
+      "author": {
+        "name": "August Group"
+      },
       "category": "Productivity",
-      "tags": ["workflow", "summary", "daily", "debrief"]
+      "tags": [
+        "workflow",
+        "summary",
+        "daily",
+        "debrief"
+      ]
     },
     {
       "name": "weekly-summary-plugin",
@@ -43,9 +81,50 @@
       "source": "./plugins/weekly-summary-plugin",
       "description": "Weekly recap of activities grouped by topic with open loops",
       "version": "1.0.0",
-      "author": { "name": "August Group" },
+      "author": {
+        "name": "August Group"
+      },
       "category": "Productivity",
-      "tags": ["workflow", "summary", "weekly", "recap"]
+      "tags": [
+        "workflow",
+        "summary",
+        "weekly",
+        "recap"
+      ]
+    },
+    {
+      "name": "check-in-plugin",
+      "displayName": "Check In",
+      "source": "./plugins/check-in-plugin",
+      "description": "Mid-task gut check on whether the current path is the right one, with independent critic subagents and clearly laid-out alternatives",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow",
+        "check-in",
+        "decision",
+        "review",
+        "strategy"
+      ]
+    },
+    {
+      "name": "say-back-plugin",
+      "displayName": "Say Back",
+      "source": "./plugins/say-back-plugin",
+      "description": ">",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow",
+        "confirmation",
+        "planning"
+      ]
     }
   ]
 }

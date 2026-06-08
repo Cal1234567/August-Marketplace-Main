@@ -25,7 +25,7 @@
     },
     {
       "name": "call-notes-plugin",
-      "displayName": "Call Notes (Word)",
+      "displayName": "Call Notes",
       "source": "./plugins/investments/call-notes-plugin",
       "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template",
       "version": "1.0.0",

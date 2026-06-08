@@ -2,7 +2,7 @@
 name: call-notes
 description: >-
   Analyzes a call or meeting transcript (.txt) and produces a structured Word briefing in the
-  August Group house template (Notes Template.docx) — titled by the call, with a snapshot,
+  August Group house template (Golden_Template.docx) — titled by the call, with a snapshot,
   counterparty participants, thematic sections in bullets/sub-bullets, highlighted critical
   takeaways, and an acronym appendix, rendered with the template's named styles and the August
   logo header/footer. Use whenever a transcript is shared and the user wants "notes", a "briefing",
@@ -18,9 +18,9 @@ You turn a call transcript into a polished, fact-checked briefing in the firm's 
 template. The output is a `.docx` that looks exactly like the template (August logo header,
 footer, margins, named styles) with your analysis poured into it.
 
-The canonical finished example is **`City Golf x August Group - Notes.docx`** in
-`…\CLAUDE\work\directs\citygolf\`. Match its quality and voice — but follow the structure rules
-below (they supersede older versions of that file).
+The canonical finished example is **`City Golf USA — Investor Intro Call Notes.docx`** bundled
+in `assets/`. Match its quality, voice, and structure — especially the B → C → D header
+hierarchy and highlight density.
 
 > **Which skill?** This skill produces the formatted **Word briefing**. If instead the user wants
 > a transcript cross-referenced against pre-set diligence questions as markdown tables, that's the
@@ -30,13 +30,14 @@ below (they supersede older versions of that file).
 ## How it works (pipeline)
 
 1. **Read the transcript** and analyze it.
-2. **Plan the sections** (adaptive — see below) and note the acronyms that will need an Appendix.
-3. **Show the user the planned outline** (section titles only) and get a quick OK before building —
-   skip only for a trivially short call or when the user said "just do it."
-4. **Write a JSON spec** describing the document as an ordered list of styled paragraph blocks.
-5. **Run the bundled builder** (`scripts/build_notes.py`), which clones the template and renders
+2. **Identify the call type** (see Section Templates below) and plan the sections.
+3. **Write a JSON spec** describing the document as an ordered list of styled paragraph blocks.
+4. **Run the bundled builder** (`scripts/build_notes.py`), which clones the template and renders
    the blocks. It writes correct UTF-8 (no `â€"` mojibake) and XML-escapes text for you.
-6. **Report the saved path** and offer to adjust.
+5. **Report the saved path** and offer to adjust.
+
+Do NOT ask for outline approval or any confirmation before building. When a transcript is
+provided and this skill is triggered, go straight to generating the doc.
 
 ## Before you start
 
@@ -46,79 +47,152 @@ below (they supersede older versions of that file).
 
 You do **not** need a recording URL (no timestamps in these notes).
 
-## Analysis & fact-check rules
+## Voice & attribution rules
 
-- **Only what was said on the call.** Never invent facts, names, or figures.
-- **Quote sparingly**, only where clean and self-contained; paraphrase anything garbled — never
-  reproduce an ungrammatical transcript fragment as a quote.
-- **Flag ambiguity explicitly**: `(phonetic)`, "units garbled in the transcript", "name ambiguous
-  in the auto-transcript". Auto-transcripts mislabel speakers and mangle numbers — surface it.
-- **Attribute** where it matters ("Mark pressed on…", "the founder conceded…").
-- **Capture the substance**, skip pleasantries/scheduling/slide-navigation.
+These rules govern how you write every bullet. Violating them is the most common quality failure.
 
-## Document structure (adaptive)
+- **Terse, not flowery.** One idea per bullet. Kill filler: "the founders expressed excitement about
+  the opportunity" → omit entirely, or just state the fact they were excited about.
+- **Numbers over adjectives.** "Strong margins" → "~80% gross margins." "Fast growth" → "~35% YoY."
+  "Significant capital" → "$12M committed." Never use a vague descriptor when the actual figure
+  was stated.
+- **Attribute pushback.** When someone challenged something, name them: "Mark pressed on patent
+  durability" — not "patent durability was discussed."
+- **Attribute concessions.** When someone hedged or conceded: "Tony acknowledged patents can be
+  worked around" — not "there are some patent risks."
+- **No corporate speak.** Never write: robust, exciting opportunity, strong pipeline, well-positioned,
+  unique value proposition, or any phrase that could appear on a pitch deck cover slide.
+- **Counterparty voice in substance sections.** The thematic sections report what the company said
+  and what was on the slides. August Group's view belongs only in the Snapshot Read bullet and
+  the Risks section.
+- **Flag unclear transcript.** Use: `(units unclear in transcript)`, `(name ambiguous — likely X)`,
+  `(number garbled — Tony said ~$480M but auto-transcript uncertain)`. Auto-transcripts mislabel
+  speakers and mangle numbers — surface it rather than guessing.
+- **Quote sparingly.** Only where clean and self-contained. Never reproduce an ungrammatical
+  transcript fragment as a quote — paraphrase instead.
 
-Use the section set that fits the call; drop/rename/add as needed. Default order:
+## The Snapshot — exact formula
 
-1. **Title** (`ATitle`) — the **name of the call**: subject + call type, e.g. "City Golf — Investor
-   Intro Call" or "Regent — Series B Commercial DD Call". Exactly one, first.
-   **No overview/recap paragraph** under it — go straight into Snapshot.
-2. **Snapshot** (`BSubheader` + bullets) — the TL;DR as bullets: concept, the ask/round, one or two
-   defining facts, the key risk, the read/next step. Highlight the 1–3 most critical takeaways.
-3. **Participants** (`BSubheader`) — **the counterparty side only**. One bullet per person with a
-   bold name lead-in. **Do not list who attended from August Group / AGC.** Add a short sub-bullet
-   only to flag a transcript naming ambiguity.
-4. **Thematic sections** (`BSubheader` each) — the substance: e.g. The Business / Concept,
-   Technology & Moat, Deal Terms & Cap Table, Unit Economics, Customers & Revenue, Rollout &
-   Go-to-Market, Management Team, Exit Strategy, Risks & Open Questions. Use `C) Subheader` for
-   sub-groups. **Do NOT include an "August Group profile / about us" section.**
-5. **Next Steps & Action Items** (`BSubheader`) — what the counterparty will send, plus mutual
-   action items (action items may name August's next steps; that's fine).
-6. **Appendix** (`BSubheader`, last) — see Acronyms below.
+The Snapshot is the most important section. It must contain these elements in this order:
 
-### Write in bullets and sub-bullets, not paragraphs
-Prefer a hierarchy of bullets over prose. Keep each `F) Bullet` to one idea, and push supporting
-detail into **sub-bullets** (`"level": 1`, and `2` if needed) rather than long sentences. Reserve
-`E) Paragraph` for rare cases. A parent bullet with 2–4 sub-bullets reads far better than one dense
-paragraph-bullet.
+1. **Concept** (`label: "Concept: "`) — one sentence: what is it, what does it do, where did it come from.
+2. **Ask / Round** (`key: true`) — raise amount, valuation, committed capital, remaining allocation.
+3. **Headline metric** (`runs` with inline highlights) — the single most compelling number (payback
+   period, revenue, growth rate, margins — whatever is the hook). Use `runs` to highlight the
+   specific figure inline.
+4. **Structure note** (`key: true` if decision-relevant) — anything structurally unusual about
+   the investment (e.g. "investment is into the holdco, not a single site"; "Golf Zone gets 25%
+   equity for no capital").
+5. **Key risk** (`label: "Key risk: "`) — the single most important concern, stated plainly.
+6. **Read** (`label: "Read: "`) — August Group's current lean and what diligence is needed to decide.
 
-### Highlight critical takeaways
-Mark the handful of genuinely decision-relevant facts as **bold + highlight** — use sparingly
-(roughly 3–6 per doc), not on everything. Two ways:
-- `"key": true` on a (short) bullet → bolds + yellow-highlights the whole bullet.
-- a `"runs"` array → highlight just the key phrase inside a bullet (cleaner for long bullets).
+Never add generic "background" or "overview" bullets to the Snapshot. If it's not one of these
+six elements, it belongs in the thematic sections.
+
+## Section templates by call type
+
+Pick the template that fits and adapt — drop or rename sections as needed, but always include
+Snapshot, Participants, Next Steps, and Appendix.
+
+### Investor Intro / Pitch Call
+Company pitching August Group for the first time.
+```
+Snapshot → Participants → The Business & Concept → Technology & IP →
+Unit Economics → Cap Table & Deal Terms → Go-to-Market & Rollout →
+Management Team → Customer Segments & Revenue → Exit Strategy →
+Risks & Open Questions → Next Steps & Action Items → Appendix
+```
+
+### Diligence Call
+Deep-dive on a specific topic area after an intro.
+```
+Snapshot → Participants → [Topic sections matching call agenda, e.g.
+  "Technology Deep-Dive", "Financial Model Review", "Reference Check"] →
+Open Questions → Next Steps & Action Items → Appendix
+```
+
+### Expert / Advisor Call
+Conversation with an operator, industry expert, or advisor (not the company).
+```
+Snapshot → Participants → Background & Context → Key Themes →
+Advice & Recommendations → Open Questions & Follow-ups → Appendix
+```
+
+### Portfolio Company Update
+Existing investment — operational or board-style update.
+```
+Snapshot → Participants → Performance Update → Key Developments →
+Risks & Concerns → Next Steps → Appendix
+```
+
+### LP / Investor Relations Call
+Call with a current or prospective LP.
+```
+Snapshot → Participants → Portfolio Updates → Market Commentary →
+Next Steps → Appendix
+```
+
+## Document structure rules
+
+1. **Title** (`ATitle`) — the **name of the call**: subject + call type. Exactly one, first.
+   **No overview paragraph** under it — go straight to Snapshot.
+2. **Participants** (`BSubheader`) — **counterparty side only.** One bullet per person, bold name
+   lead-in. **Never list August Group / AGC attendees.** Sub-bullet only to flag a transcript
+   naming ambiguity.
+3. **No "August Group profile" section.** Ever.
+4. **Appendix** always last.
+
+### The three-level header hierarchy — use it
+
+The template has B → C → D headers. A flat document with only `BSubheader` is wrong.
+
+| `style` id   | Level | Visual | Use for |
+|--------------|-------|--------|---------|
+| `ATitle`     | —     | Large bold | Document title. Exactly one. |
+| `BSubheader` | 1     | Bold, solid ruled underline | Major sections (Snapshot, Technology & IP, etc.) |
+| `CSubheader` | 2     | Gold, dotted underline | Sub-sections within a B section. Use when a B section covers 2+ distinct topics. |
+| `DSubheader` | 3     | Dark underline | Sub-sections within a C section. Use when a C section itself breaks into 2+ distinct sub-topics. |
+| `EParagraph` | —     | Normal text | Rare prose or caveat. |
+| `FBullet`    | —     | Bullet point | Nearly all content. Use `level` (1, 2) for sub-bullets. |
+
+**Rule of thumb:** if a B section has more than ~4 bullets on different sub-topics, split into C
+sub-sections. If a C section has more than ~3 bullets on different sub-topics, split into D
+sub-sections. Never go B → bullets when B → C → D → bullets would be clearer.
+
+### Write in bullets, not paragraphs
+One idea per bullet. Push supporting detail into sub-bullets (`"level": 1`, `2`) rather than long
+sentences. A parent bullet with 2–4 sub-bullets reads far better than one dense paragraph-bullet.
+Reserve `EParagraph` for rare cases.
+
+### Highlight liberally
+Every key number, metric, date, and decision-relevant fact should be highlighted so a reader
+skimming can extract the substance at a glance.
+- `"key": true` — bolds + yellow-highlights the whole bullet. Reserve for the 2–3 most critical
+  facts in the whole doc (e.g. the round size, the headline metric).
+- `"runs"` with `"highlight": true` — highlight just the phrase. Use freely: dollar amounts,
+  percentages, timeframes, dates, headcounts, utilization figures, patent counts, site sizes,
+  check sizes. When in doubt, highlight it.
 
 ### Appendix — acronyms
-End with an **Appendix** section that expands every **non-finance-standard / industry / regulatory
-/ company-specific acronym** used, one bullet each (`label` = the acronym, `text` = the expansion +
-a few words of context). Examples to expand: WIG, USCG, DBA, PDP, OEM, RFID, PGA, TGL, TGF, F&B,
-JV, ADNOC, DoW/DHS. **Leave finance-standard acronyms inline** (don't appendix these): PE, VC,
-LP/GP, IRR, MOIC, EBITDA, CAPEX/OPEX, NDA, IC, SPV, MFN, LOI, ROFR, TAM, P&L, UHNW.
+One bullet per non-standard acronym (`label` = acronym, `text` = expansion + a few words of
+context). Expand: industry terms, company-specific terms, regulatory bodies, proper nouns
+abbreviated on the call (TGF, TGL, RFID, PGA, F&B, JV, OEM, etc.).
+**Leave standard finance acronyms inline** (no appendix entry): PE, VC, LP/GP, IRR, MOIC,
+EBITDA, CAPEX/OPEX, NDA, IC, SPV, MFN, LOI, ROFR, TAM, P&L, UHNW.
 
-## Style vocabulary
+## Style vocabulary — block fields
 
-| `style` id   | Use for |
-|--------------|---------|
-| `ATitle`     | The document title = the call's name. Exactly one, first. |
-| `BSubheader` | Every major section header (Snapshot, Participants, …, Appendix). |
-| `CSubheader` | A sub-group within a section. |
-| `EParagraph` | Rare prose / a short caveat note. |
-| `FBullet`    | The workhorse: nearly all content (renders a real bullet; use `level` for sub-bullets). |
-| `DSubheader` | A deeper header — rarely needed. |
-| `RisksHeader` / `Risks` | Optional dedicated risk styling; default to `BSubheader` + `FBullet`. |
-
-### Block fields
 ```json
 {"style": "FBullet", "label": "Round: ", "text": "$15M at $30M pre / $45M post."}
-{"style": "FBullet", "level": 1, "text": "$12M already committed; ~$2–3M left for strategics."}
+{"style": "FBullet", "level": 1, "text": "$12M already committed; ~$3M left for strategics."}
 {"style": "FBullet", "key": true, "text": "Investment is into the whole US holdco, not a single site."}
 {"style": "FBullet", "runs": [
    {"text": "Payback "}, {"text": "~2 years at 65% utilization", "bold": true, "highlight": true},
    {"text": "; breakeven at 25%."}]}
 ```
-- `label` — bold lead-in (include its trailing punctuation/space). `text` — the normal run.
+- `label` — bold lead-in (include trailing punctuation/space). `text` — normal-weight run after it.
 - `level` — FBullet sub-bullet depth: 0 (`•`), 1 (`o`), 2 (`▪`).
-- `key` — `true` = critical takeaway (bold + yellow highlight of the whole bullet).
+- `key` — `true` = critical takeaway: bold + yellow-highlight the whole bullet.
 - `runs` — `[{text, bold?, italic?, highlight?}]`; replaces label/text. `highlight` may be `true`
   (= yellow) or a color name (yellow/green/turquoise/pink/gray).
 - Only these keys are allowed (a typo'd key is rejected, so a label can't silently vanish).
@@ -128,19 +202,18 @@ LP/GP, IRR, MOIC, EBITDA, CAPEX/OPEX, NDA, IC, SPV, MFN, LOI, ROFR, TAM, P&L, UH
 ## The JSON spec & build
 
 Spec = `{"output_path": "...", "blocks": [ ... ]}`. Use **forward slashes** in `output_path`
-(backslashes are invalid JSON escapes). Default name `<Subject> — <Call> Notes.docx` (or keep an
-existing filename when redoing one). **Never write the .docx into this plugin's own folder**; if a
-transcript lives there, save to a sensible notes location or ask.
+(backslashes are invalid JSON escapes). Default name `<Subject> — <Call Type> Notes.docx`.
+**Never write the .docx into this skill's own folder.**
 
-Write the spec with the Write tool (not a shell heredoc), then run the builder by its absolute path:
+Write the spec with the Write tool, then run the builder by its absolute path:
 
 ```
 python "<ABSOLUTE path to this skill>/scripts/build_notes.py" "<path to spec>.json"
 ```
-- The template auto-resolves from `assets/Notes Template.docx`; you only pass the spec.
-- It validates the spec (fails on bad/typo'd keys; warns on empty blocks or a missing/duplicate
-  title), saves atomically, and if the output is **open in Word** stops with a clear "close it and
-  re-run" message. `--out PATH` overrides `output_path`; `--dump-styles` lists styles.
+- The template auto-resolves from `assets/Golden_Template.docx`; you only pass the spec.
+- It validates the spec (fails on bad/typo'd keys; warns on empty blocks or missing title),
+  saves atomically, and if the output is **open in Word** stops with a clear "close it and re-run"
+  message. `--out PATH` overrides `output_path`; `--dump-styles` lists template styles.
 
 After it saves, tell the user the path and offer to tweak.
 
@@ -152,7 +225,6 @@ After it saves, tell the user the path and offer to tweak.
 
 ## Maintenance
 
-Template is bundled at `assets/Notes Template.docx` (frozen copy). If the house template changes,
-refresh it from `C:\Users\CalShannon\OneDrive - August Group\Notes Template.docx`. Requires
-`python-docx`. After editing this skill, refresh the installed copy:
-`/plugin marketplace update august-group` then `/reload-plugins`.
+Template is bundled at `assets/Golden_Template.docx` (frozen copy). If the house template changes,
+refresh it from `C:\Users\CalShannon\OneDrive - August Group\Desktop\CLAUDE\work\directs\citygolf\Golden_Template.docx`.
+Requires `python-docx`.

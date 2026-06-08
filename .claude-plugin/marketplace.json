@@ -8,22 +8,6 @@
   },
   "plugins": [
     {
-      "name": "call-transcript-plugin",
-      "displayName": "Call Transcript Analyzer",
-      "source": "./plugins/investments/call-transcript-plugin",
-      "description": "Cross-reference call transcripts against diligence questions",
-      "version": "1.0.0",
-      "author": {
-        "name": "August Group"
-      },
-      "category": "Investments",
-      "tags": [
-        "investments",
-        "transcripts",
-        "call-analysis"
-      ]
-    },
-    {
       "name": "call-notes-plugin",
       "displayName": "Call Notes",
       "source": "./plugins/investments/call-notes-plugin",

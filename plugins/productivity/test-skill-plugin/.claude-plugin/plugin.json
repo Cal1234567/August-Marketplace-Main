@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "test-skill-plugin",
+  "displayName": "Test Skill",
+  "version": "1.0.0",
+  "description": "Test skill to verify the August Group marketplace auto-sync pipeline.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

@@ -108,6 +108,20 @@
         "confirmation",
         "planning"
       ]
+    },
+    {
+      "name": "test-skill-plugin",
+      "displayName": "Test Skill",
+      "source": "./plugins/productivity/test-skill-plugin",
+      "description": "Test skill to verify the August Group marketplace auto-sync pipeline.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "test"
+      ]
     }
   ]
 }

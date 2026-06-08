@@ -3,7 +3,7 @@
   "name": "call-notes-plugin",
   "displayName": "Call Notes",
   "version": "1.0.0",
-  "description": "Analyzes a call or meeting transcript (.txt) and produces a structured Word briefing in the August Group house template (Golden_Template.docx) — titled by the call, with a snapshot, counterparty participants, thematic sections in bullets/sub-bullets, highlighted critical takeaways, and an acronym appendix, rendered with the template's named styles and the August logo header/footer. Use whenever a transcript is shared and the user wants \"notes\", a \"briefing\", a \"write-up\", a \"Word doc\", \"City Golf-style notes\", \"put this call in the template\", or \"notes doc\" for an investor / diligence / meeting call. Produces a .docx saved next to the transcript. This is distinct from cross-referencing pre-set diligence questions into markdown tables (that is the call-transcript skill); use this one when the deliverable is the formatted Word document.",
+  "description": "Turn a call or meeting transcript into a structured Word briefing in the August Group house template.",
   "author": {
     "name": "August Group"
   },

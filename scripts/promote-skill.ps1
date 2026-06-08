@@ -55,6 +55,14 @@ if (-not $Description) {
     $Description = $Description -replace '^\(PERSONAL\)\s*', ''
 }
 
+# --- Truncate to first sentence for the site listing ---
+# The full description is needed in SKILL.md (it's what Claude uses to trigger the skill)
+# but marketplace.json and plugin.json only need a short one-liner.
+$SiteDescription = ($Description -split '(?<=[.!?])\s')[0].Trim()
+if ($SiteDescription.Length -gt 120) {
+    $SiteDescription = $SiteDescription.Substring(0, 117).TrimEnd() + '...'
+}
+
 # --- Derive slug, display name, and subdirectory ---
 $Slug        = $Name -replace '^personal-', ''
 $PluginName  = "$Slug-plugin"
@@ -83,7 +91,7 @@ $pluginJson = [ordered]@{
     name        = $PluginName
     displayName = $DisplayName
     version     = "1.0.0"
-    description = $Description
+    description = $SiteDescription
     author      = [ordered]@{ name = "August Group" }
     repository  = "https://github.com/Cal1234567/claude-plugins"
     skills      = "./skills"
@@ -107,7 +115,7 @@ $entry = [ordered]@{
     name        = $PluginName
     displayName = $DisplayName
     source      = "./plugins/$SubDir/$PluginName"
-    description = $Description
+    description = $SiteDescription
     version     = "1.0.0"
     author      = [ordered]@{ name = "August Group" }
     category    = $Category

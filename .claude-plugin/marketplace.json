@@ -92,6 +92,20 @@
         "confirmation",
         "planning"
       ]
+    },
+    {
+      "name": "cfu-skill-plugin",
+      "displayName": "Cfu Skill",
+      "source": "./plugins/productivity/cfu-skill-plugin",
+      "description": "Generate an August Group CFU (Client-Facing Update / quarterly Company & Fund Update) DOCX that matches the historica...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
     }
   ]
 }

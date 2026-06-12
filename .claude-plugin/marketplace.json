@@ -106,6 +106,22 @@
       "tags": [
         "workflow"
       ]
+    },
+    {
+      "name": "marketplace-publisher-plugin",
+      "displayName": "Marketplace Publisher",
+      "source": "./plugins/productivity/marketplace-publisher-plugin",
+      "description": "Publish skills from your Cowork workspace to the August Group marketplace",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow",
+        "publishing",
+        "skills"
+      ]
     }
   ]
 }

@@ -122,6 +122,20 @@
         "publishing",
         "skills"
       ]
+    },
+    {
+      "name": "investment-summary-plugin",
+      "displayName": "Investment Summary",
+      "source": "./plugins/productivity/investment-summary-plugin",
+      "description": "Generate an August Group Investment Summary (.docx) for a single operating company, matching the house deck style (Ad...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
     }
   ]
 }

@@ -9,9 +9,22 @@ description: >
 
 # CFU Skill
 
-Produce the quarterly August Group CFU document from a set of GP/manager source files (LP letters,
-quarterly reports, fund updates). The output must match the historical CFUs exactly — gold entity
+Produce the quarterly August Group CFUs from a set of GP/manager source files (LP letters,
+quarterly reports, fund updates). The deliverable is **two DOCX files** — a **Fund CFUs**
+document and a **Direct CFUs** document — each matching its gold guide exactly: gold entity
 names, navy section banners, August writing voice, correct bullet glyphs, inline italic glosses.
+
+## The guides are the target
+
+Two gold documents define exactly what the output must look and read like:
+
+- `guide/Q1 2026 Fund CFUs.docx`
+- `guide/Q1 2026 Direct CFUs.docx`
+
+These are the gold reference documents bundled with the skill. For a new quarter, refresh them
+from the latest finished CFUs when available. The whole job of this skill is to reproduce *that*
+style and format, pointed at whatever source files a new quarter brings. When in doubt about
+voice or layout, open the guides.
 
 ## Architecture
 
@@ -19,8 +32,9 @@ Content and formatting are separated:
 
 - **You (the model)** read the source PDFs/docs and write all prose into `cfu-content.json`,
   following the guide references below.
-- **`scripts/build_cfu.py`** turns that JSON into a byte-consistent DOCX — fonts, gold headings,
-  navy banners, bullet numbering, and the August header/footer are all enforced by code.
+- **`scripts/build_cfu.py`** turns that JSON into **two** byte-faithful DOCX files — fonts, gold
+  headings, navy banners, bullet numbering, and the August header/footer are all enforced by
+  code. Each file is built from its matching gold guide as the template.
 
 Your only job is correct, on-voice, source-true content. Visual fidelity is automatic.
 
@@ -30,9 +44,10 @@ Create a working folder anywhere on your machine — the suggested structure is:
 
 ```
 CFUs\
-  Sources\                   ← drop source PDFs here (current quarter)
-  cfu-content.json           ← you write this; builder reads it
-  Q# YYYY CFUs - DRAFT.docx  ← output lands here
+  Sources\                          ← drop source PDFs here (current quarter)
+  cfu-content.json                  ← you write this; builder reads it
+  Q# YYYY Fund CFUs - DRAFT.docx    ← funds output
+  Q# YYYY Direct CFUs - DRAFT.docx  ← directs output
 ```
 
 The guide docs, content schema, and gold example outputs are bundled inside this skill:
@@ -40,9 +55,8 @@ The guide docs, content schema, and gold example outputs are bundled inside this
 ```
 skill/
   guide/
-    Q1 2026 CFUs.docx          ← Word base template (header/footer/styles)
-    Q1 2026 Fund CFUs.docx     ← gold example: Fund CFUs section
-    Q1 2026 Direct CFUs.docx   ← gold example: Direct CFUs section
+    Q1 2026 Fund CFUs.docx     ← gold guide + template for the funds output
+    Q1 2026 Direct CFUs.docx   ← gold guide + template for the directs output
   references/
     01-document-structure.md
     02-formatting-spec.md
@@ -51,12 +65,13 @@ skill/
     content-schema.md
 ```
 
-Read the gold examples before drafting — they show exactly what the finished output should
-look like for funds and directs respectively.
+Read both gold guides before drafting — they show exactly what the finished output should
+look like for funds and directs respectively. Each guide doubles as the DOCX template for its
+output, so the header/footer/logo/styles come through automatically.
 
-For a new quarter, swap the files in Sources\ and update `template_docx` in the JSON to point
-to `guide/Q1 2026 CFUs.docx` (or a newer template if available). The builder only cares about
-`cfu-content.json`.
+For a new quarter, swap the files in Sources\ and write a fresh `cfu-content.json`. The builder
+defaults to the bundled guides as templates — no path wiring needed. (If a newer gold guide
+exists for the quarter, refresh the two files in `guide/` from it first.)
 
 ## Required reading (load before drafting)
 
@@ -99,9 +114,12 @@ Optional: `pdfplumber` or `pypdf` for PDF text extraction.
    If a source covers multiple entities, split them.
 
 5. **Draft `cfu-content.json`.** For each entity:
+   - For **funds**, set `update_period` to the quarter that fund's source covers, in full form
+     (`"Q4 2025"`) — the builder renders the gold `Name – Q4 2025 Update` header. Each fund gets
+     its own quarter. Omit `update_period` for directs (bare-name header).
    - Start with `Fund Updates` / `General Updates` sub-header.
-   - Lead with the snapshot-metrics bullet (positions, net multiple, net IRR for funds;
-     valuation/multiple for directs).
+   - Lead with the snapshot-metrics bullet (investments/positions, deployed capital, gross
+     multiple, gross IRR for funds; valuation/multiple for directs). No terminal period.
    - Add themed sub-headers as the source supports.
    - Use `Key Portfolio Updates` + italic topic headers for individual deal line-items in funds.
    - Apply all conventions from `03-writing-style.md`: date format, tilde approximations,
@@ -109,24 +127,26 @@ Optional: `pdfplumber` or `pypdf` for PDF text extraction.
    - Never invent figures. If a metric is absent from the source, omit the bullet.
    - Follow the content-schema.md spec exactly for runs/topics/bullets.
 
-6. **Build the DOCX.** Run:
+6. **Build the two DOCX files.** Run (writes both files into one folder with standard names):
    ```
    python "<skill-dir>/scripts/build_cfu.py" \
      --content "path/to/cfu-content.json" \
-     --out "path/to/Q1 2026 CFUs - DRAFT.docx"
+     --out-dir "path/to/output/folder"
    ```
-   Replace `<skill-dir>` with the absolute path to this skill's folder. Adjust content and
-   output paths as needed. If `template_docx` is omitted from the JSON, the builder
-   automatically uses the template bundled at `guide/Q1 2026 CFUs.docx`.
+   Replace `<skill-dir>` with the absolute path to this skill's folder. Output names come from
+   `period_label`: `{period_label} Fund CFUs - DRAFT.docx` and
+   `{period_label} Direct CFUs - DRAFT.docx`. To control paths individually, use
+   `--out-funds` / `--out-directs` instead of `--out-dir`. The builder defaults to the bundled
+   gold guides as templates; override with `--template-funds` / `--template-directs` if needed.
 
-7. **Review and deliver.** Open the DOCX and confirm:
-   - Entity names are gold.
-   - Section banners are navy bold caps.
+7. **Review and deliver.** Open **both** DOCX files and confirm:
+   - Entity names are gold; fund headers carry the `– Q# YYYY Update` suffix, directs do not.
+   - Section banners are navy bold caps (`FUND CFUs` / `DIRECT CFUs`).
    - Bullets use correct glyphs.
    - Inline italic glosses are present for all jargon.
-   - Dates are in `Mon-YY` / `Q#'YY` form.
+   - Dates are in `Mon-YY` / `Q#'YY` form in body text (full `Q# YYYY` only in fund headers).
    - No invented figures.
-   Report the output path and any entities where source material was sparse.
+   Report both output paths and any entities where source material was sparse.
 
 ## Regeneration
 

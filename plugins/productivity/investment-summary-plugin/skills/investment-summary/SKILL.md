@@ -24,13 +24,15 @@ Produces a polished `.docx` investment summary in the **operating-company deck s
 
 These come straight from the source summaries (Addepar / Form / Radiant). Getting them wrong makes the doc look "off."
 
-1. **Approximations use `~`, never the word "approximately."** Sources use `~` 35–46× each and the word "approximately" **zero** times. Write `~C$7M`, `~24%`, `~6 months` — not "approximately C$7M". (`~` attaches directly to the value, no space.)
-2. **Bullet lead-ins take a colon inside the bold:** `**Cost Leadership:** explanation` — not an em-dash. (`**Key Mitigants:**` likewise.)
+1. **Approximations use `~`, never the word "approximately."** Sources use `~` **36–46× each** and the word "approximately" **zero** times. Write `~US$730M`, `~24%`, `~6 months` — not "approximately US$730M". The `~` attaches directly to the value (no space) and also fronts approximate **counts, multiples, and dates** (`~3,000`, `~80x`, `~Mar-22`, `~Q1'26`).
+2. **Bullet lead-ins take a colon inside the bold:** `**Cost Leadership:** explanation` — never an em-dash, never spaced. (`**Key Mitigants:**` likewise.) Em-dashes *are* used elsewhere, but **only** as a **closed** (no-space) paired parenthetical aside in running prose — `…complex—particularly private allocations—legacy systems…` — and sparingly (≤11 in a whole doc). En-dashes appear only **spaced** as a label separator (`Name – role`); numeric **ranges use a plain hyphen** (`5-10`, `96-99%`).
 3. **Inline cross-references point to THIS document's own numbered Appendix Exhibits** — `*(see Exhibit 1 in Appendix)*` / `*(see Appendix, Exhibit 3)*`. **Never** reference "the deck," "the source materials," or "the slide." If you cite an exhibit inline, that exhibit must exist in the Appendix.
 4. **Do not attribute an opinion to "August Group" unless it is backed by actual August diligence.** With only company materials, write analysis as neutral observations ("Notably, the implied valuation sits above the Company's own current-year framework…") rather than "August Group's view is…". The phrase "August Group" should otherwise appear only in the standard Considerations line ("August Group clients will invest…") and the verbatim disclaimer.
 5. **Cite the source by name in `Source:` lines and third-party stats** ("Source: [Company] Investor Deck"; "According to [source]…") — but that is different from rule 3's inline *exhibit* cross-references.
-6. **Currency:** match the company. US deals use `US$`; a Canadian company uses `C$`. If the materials do not label currency, presume from context and flag the assumption once.
+6. **Currency follows the company's own reporting currency — not the audience.** In prose use the `US$` prefix; all three reference decks report in `US$`, **including the Canada-distributed Form Energy deck (zero `C$`)**. Use `C$`/`€` only if the company itself reports in that currency. Canadian *distribution* only adds the `For Canadian residents only` footer; it never changes the currency. In **financial tables** use a bare `$` with the unit in the column header (`(US$M)`); write the facts-table minimum as `$100k USD`.
 7. **Don't invent missing facts.** If August's entry terms (instrument, price, discount, multiple), the SPV/fee structure, the minimum, or a stated valuation are absent, say so plainly and leave the facts-table value as `TBD`.
+8. **Decimal precision is fixed by figure type.** Money magnitudes (`M`/`B`/`T`) take **≤1 decimal** (`US$2.9B`, `US$435.4M`; most are whole); per-share prices take **2** (`US$3.20 per share`). Percentages are **integers** unless sub-integer, then **exactly 1** (`~6.2%`, `~0.7%`) — never 2. **Financial multiples always carry 1 decimal, even when whole** (`8.6x`, `10.0x` — not `10x`); rhetorical "Nx" multipliers are integers (`3x`, `~80x`).
+9. **Flag gaps, never fabricate — these summaries are finished in tandem with a human.** Wherever a fact cannot be verified from the available sources (a bio tenure, a date, a school, an unconfirmed identity, an unsourced figure), insert a visible gap marker `[[NEED: …]]` or `[[VERIFY: …]]` **instead of guessing or silently dropping it**. The build script renders `[[…]]` as **bold dark-red text on a yellow highlight**, so the human reviewer sees exactly what is left to complete. This is the standing rule for **team-bio tenures** (often only on LinkedIn, which is hard to read reliably) and for any deck claim you could not corroborate. Keep each marker short and specific: `[[NEED: tenure]]`, `[[VERIFY: which person]]`, `[[NEED: education]]`.
 
 ```
 python "<skill>/scripts/build_summary.py" spec.json --out "C:/Users/.../Desktop/<Company> - Investment Summary.docx"
@@ -52,7 +54,7 @@ Render these as `h1` section headings, in this order. **This is the default — 
 8. **Investment Overview** — current round & capitalization, financing history, future funding & exit.
 9. **Key Risks & Mitigants** — see pattern below.
 10. **Considerations** — the SPV / fee mechanics (and any deal caveats), as bullets.
-11. **Appendix** — numbered **Exhibits** (`h1` "Appendix", then `h2` "Exhibit 1: …", "Exhibit 2: …"). Every source summary has one. Put the **management team & board** bios here as Exhibit 1, and paste source charts/diagrams/timelines/pipelines as `image` exhibits. Inline cross-references (rule 3) must point to these exhibits.
+11. **Appendix** — numbered **Exhibits** (`h1` "Appendix", then `h2` "Exhibit 1: …", "Exhibit 2: …"). Every source summary has one. Put the **management team & board** bios here as Exhibit 1 in the **deep-bio format** (per-person roles with tenure + education, researched and gap-flagged — see Patterns), and paste source charts/diagrams/timelines/pipelines as `image` exhibits. Inline cross-references (rule 3) must point to these exhibits.
 
 Then always append, verbatim via dedicated blocks: **`risk_factors`** → **`disclaimer`**. (Order: … Considerations → Appendix → Risk Factors → Disclaimer.)
 
@@ -83,7 +85,22 @@ To make exhibit images, render the relevant source-deck page(s) to PNG (e.g. wit
 
 **Source lines** under any pasted chart/image or table: `{"type":"source","text":"Source: …"}` (renders gold italic).
 
-**Inline markup** in any text: `**bold**` (bullet lead-ins, with a colon: `**Lead-in:** …`), `*italic*` (cross-references like `*(see Exhibit 1 in Appendix)*`).
+**Management Team & Board — deep bios (Appendix Exhibit 1)** — the preferred team treatment: one **bold name + title** lead-in per person (level 0), then sub-bullets (level 1) of prior roles *with tenure* and education, closed by a single combined `source` line. Research each person across the deck, the company website, press, and LinkedIn, and corroborate across ≥2 sources where you can. **Where you cannot verify a tenure, school, or role, leave a `[[NEED: …]]` gap flag rather than guessing** (hard rule 9). Reconcile deck-vs-web conflicts in favour of the corroborated source (e.g. a Loblaws history the deck pins on the founder but LinkedIn shows belongs to the CFO) and flag anything still uncertain with `[[VERIFY: …]]`.
+```json
+{"type":"h2","text":"Exhibit 1: Management Team & Board"},
+{"type":"bullets","items":[
+  {"text":"**Dave Duronio (Partner & VP Finance and Strategy)**","level":0},
+  {"text":"Former Head of Product Management, Marketing & BI at The Mobile Shop / Loblaw (~14-year tenure)","level":1},
+  {"text":"M.B.A. from York University","level":1},
+  {"text":"B.Com. from [[NEED: school]]","level":1},
+  {"text":"**Andy Hay (Partner & Head of Culinary)**","level":0},
+  {"text":"Runner-up on MasterChef Canada (Season 5) [[VERIFY: also \"Back to Win\"?]]","level":1},
+  {"text":"B.A. in Commerce from Mount Allison University","level":1}
+]},
+{"type":"source","text":"Source: [Company] Investor Deck, [Company] website, LinkedIn."}
+```
+
+**Inline markup** in any text: `**bold**` (bullet lead-ins, with a colon: `**Lead-in:** …`), `*italic*` (cross-references like `*(see Exhibit 1 in Appendix)*`), and `[[…]]` (a **gap flag** — renders bold dark-red on a yellow highlight; use for anything you could not verify, e.g. `[[NEED: tenure]]`, so the human knows exactly what is left to complete — see hard rule 9).
 
 ## JSON spec schema
 

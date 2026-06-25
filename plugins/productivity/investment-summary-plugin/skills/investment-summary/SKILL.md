@@ -1,11 +1,13 @@
 ---
 name: investment-summary
-description: Generate an August Group Investment Summary (.docx) for a single operating company, matching the house deck style (Addepar / Form / Radiant) — teal hero banner, gold "INVESTMENT SUMMARY" label, the Asset Class / Risk / Minimum / Liquidity facts table, small-caps section headings with rules, gold sub-headings, teal-headed financial tables, and the standard section structure ending in Considerations → Risk Factors → Disclaimer. Trigger when the user asks to "make/build/write an investment summary", "do an August summary", "write up [company] as an investment summary", "turn this deck/memo into an investment summary", or hands over source material (a pitch deck, investor model, memo, or notes) on a company and wants the August-style write-up. This is for operating companies (direct/secondary growth-equity deals), not funds.
+description: Generate an August Group Investment Summary (.docx) for a single operating company, matching the house style (golden = HARVEST Clean Eats) — a clean titled document under the August Group logo header (no cover banner or facts table by default), small-caps section headings with solid rules, gold dotted sub-headings, bold-lead-in bullets, teal-headed financial tables, and the standard section structure ending in Key Risks → Considerations → Appendix (numbered Exhibits) → Disclaimer. Trigger when the user asks to "make/build/write an investment summary", "do an August summary", "write up [company] as an investment summary", "turn this deck/memo into an investment summary", or hands over source material (a pitch deck, investor model, memo, or notes) on a company and wants the August-style write-up. This is for operating companies (direct/secondary growth-equity deals), not funds.
 ---
 
 # Investment Summary (August Group house style)
 
-Produces a polished `.docx` investment summary in the **operating-company deck style** of Addepar / Form Energy / Radiant. The look is locked by a golden template + build script; your job is to **gather the inputs, choose the sections that fit the company, write the prose in house voice, assemble a JSON spec, and run the build script.**
+Produces a polished `.docx` investment summary in the **August Group house style** — a clean, titled document under the firm's logo header, matching the **golden HARVEST Clean Eats summary**. The look is locked by a golden template + build script; your job is to **gather the inputs, choose the sections that fit the company, write the prose in house voice, assemble a JSON spec, and run the build script.**
+
+> **The golden output is plain, not a deck cover.** Page 1 is: logo header → big bold title → straight into `Executive Summary`. There is **no hero banner, no "INVESTMENT SUMMARY" label, and no facts table** by default. (The old Addepar/Form/Radiant deck cover is still available — opt in with `"cover": true` — but the default and the golden reference do not use it.)
 
 ## Files in this skill
 - `reference/style-and-format.md` — **the full style & writing guide. Read it before writing.** It defines the voice, number/date/citation conventions, palette, fonts, and section playbook.
@@ -52,23 +54,35 @@ Render these as `h1` section headings, in this order. **This is the default — 
 6. **Financial Overview** — KPIs, revenue/ARR, gross margin, EBITDA, unit economics — with a teal `table` block, each sourced.
 7. **Competitive Landscape** — market structure, named peers (a comparison `table` if useful), competitive advantages, barriers to entry.
 8. **Investment Overview** — current round & capitalization, financing history, future funding & exit.
-9. **Key Risks & Mitigants** — see pattern below.
-10. **Considerations** — the SPV / fee mechanics (and any deal caveats), as bullets.
+9. **Key Risks** — one bullet per risk, **bold lead-in + colon**, see pattern below. (Golden titles this section just **"Key Risks"**, not "Key Risks & Mitigants".)
+10. **Considerations** — deal caveats as bullets (non-advised nature, what the equity is, valuation/multiple, disclosure asks, illiquidity). The SPV / fee mechanics are an alternative form — see Patterns.
 11. **Appendix** — numbered **Exhibits** (`h1` "Appendix", then `h2` "Exhibit 1: …", "Exhibit 2: …"). Every source summary has one. Put the **management team & board** bios here as Exhibit 1 in the **deep-bio format** (per-person roles with tenure + education, researched and gap-flagged — see Patterns), and paste source charts/diagrams/timelines/pipelines as `image` exhibits. Inline cross-references (rule 3) must point to these exhibits.
 
-Then always append, verbatim via dedicated blocks: **`risk_factors`** → **`disclaimer`**. (Order: … Considerations → Appendix → Risk Factors → Disclaimer.)
+Then always append the **`disclaimer`** block. (Order: … Key Risks → Considerations → Appendix → Disclaimer.)
+
+> **No Risk Factors section by default.** The golden summary ends Considerations → Appendix → Disclaimer, with **no separate "Risk Factors" section**. A `risk_factors` block still exists if a deal needs it, but do not add it by default.
 
 ## Patterns
 
-**Key Risks & Mitigants** — one risk per group:
+**Key Risks (golden / default)** — a single `h1` "Key Risks" section, then **one bullet per risk** with a bold lead-in + colon. The risk description carries the substance; an inline exhibit cross-reference is fine. (The golden summary does **not** break out a separate "Key Mitigants" line.)
 ```json
-{"type":"h2","text":"Scaling Challenges"},
-{"type":"p","text":"Acme must transition from pilot to high-volume production while maintaining quality and cost."},
-{"type":"p","text":"**Key Mitigants:** Acme's experienced operations team and phased factory ramp de-risk the transition."}
+{"type":"h1","text":"Key Risks"},
+{"type":"bullets","items":[
+  {"text":"**Early-Stage Scale and Execution Risk:** Acme is an early-stage franchisor with 9 locations against a plan to reach 110 by 2030, requiring sustained recruitment and multi-province execution *(see Exhibit 9 in Appendix)*","level":0},
+  {"text":"**Key-Person and Ownership Concentration:** Ownership is concentrated, with two principals holding ~79% combined *(see Exhibit 2 in Appendix)*","level":0}
+]}
 ```
-(Use `h2` for the risk name, not an inline newline — keeps justified text from stretching.)
+*Alternative (Radiant form):* if a deal warrants explicit mitigants, name the section "Key Risks & Mitigants", use `h2` for each risk name, a `p` describing it, then a `p` starting `**Key Mitigants:**`. The golden uses the simpler bullet form above — prefer it.
 
-**Considerations** (operating-company / SPV) — bullets, adapt the manager & fees:
+**Considerations (golden / default)** — deal caveats as bullets: the non-advised nature, what the equity actually is, the valuation/multiple, a disclosure ask, and illiquidity/exit.
+```json
+{"type":"bullets","items":[
+  {"text":"As a non-advised direct investment opportunity, August Group is presenting this summary for informational purposes and is not making a recommendation to invest","level":0},
+  {"text":"At C$2M for up to 20% equity, the implied post-money valuation is C$10M, representing ~12x FY'25 franchisor revenue (C$837k); this is a growth premium that requires significant execution to justify","level":0},
+  {"text":"The investment is illiquid with no specified exit mechanism or timeline. Returns are contingent on a future liquidity event (trade sale, strategic acquisition, IPO) that is not guaranteed or currently committed","level":0}
+]}
+```
+*Alternative (SPV/fee mechanics)* — when the SPV terms are known, use them instead of / alongside the caveats:
 ```json
 {"type":"bullets","items":[
   {"text":"August Group clients will invest in this deal through an SPV set up by [SPV Manager].","level":0},
@@ -109,8 +123,9 @@ To make exhibit images, render the relevant source-deck page(s) to PNG (e.g. wit
   "title": "ACME ROBOTICS",
   "filename": "Acme Robotics - Investment Summary.docx",
   "output_dir": "C:/Users/.../Desktop",
-  "banner_image": "C:/path/to/company_logo_white_or_product_photo.png",  // optional; else teal band w/ the title
-  "facts": {
+  "cover": false,                                     // opt-in deck cover (banner+label+facts); golden = false
+  "banner_image": "C:/path/to/...png",                // cover only; else teal band w/ the title
+  "facts": {                                          // cover only
     "asset_class": "Direct Investment – Growth Equity",
     "risk_level": "High",
     "minimum_investment": "$100k USD",
@@ -121,20 +136,19 @@ To make exhibit images, render the relevant source-deck page(s) to PNG (e.g. wit
     {"type":"h1","text":"Executive Summary"},
     {"type":"p","text":"Acme Robotics (\"Acme\" or the \"Company\") is ..."},
     {"type":"h2","text":"Core Product"},
-    {"type":"bullets","items":[{"text":"**Lead-in**: detail","level":0},{"text":"sub-detail","level":1}]},
+    {"type":"bullets","items":[{"text":"**Lead-in:** detail","level":0},{"text":"sub-detail","level":1}]},
     {"type":"table","headers":["US$M","2024A","2025E"],"rows":[["Revenue","82","140"],["EBITDA","(12)","4"]],"emphasis_rows":[1],"source":"Source: Acme Investor Model"},
     {"type":"image","path":"C:/.../ex_chart.png","source":"Source: Acme Investor Deck"},
     {"type":"source","text":"Source: ..."},
-    {"type":"risk_factors"},
-    {"type":"disclaimer","variant":"short"}
+    {"type":"disclaimer"}
   ]
 }
 ```
 
-Block types: `h1` (section heading), `h2` (gold sub-heading), `p` (body), `bullets` (`items` with `level` 0/1), `table` (teal header; `emphasis_rows` shades/bolds totals; optional `source`), `image` (paste a pre-built exhibit/chart PNG full-width, optional `source`; optional `width_in`), `source` (gold italic), `risk_factors` (verbatim), `disclaimer` (`variant` `short`|`long`, default short).
+Block types: `h1` (section heading), `h2` (gold sub-heading), `p` (body), `bullets` (`items` with `level` 0/1), `table` (teal header; `emphasis_rows` shades/bolds totals; optional `source`), `image` (paste a pre-built exhibit/chart PNG full-width, optional `source`; optional `width_in`), `source` (gold italic), `risk_factors` (verbatim; opt-in, golden omits it), `disclaimer` (default = the AGC standard text used in the golden; pass `variant` `short`|`long` only if a deal needs those older variants).
 
 ## Notes
-- **Cover is automatic** from `title` + `subtitle` + `facts` + `banner_image`. **Always try to provide a real `banner_image`** — the source summaries never use a plain text band. A company logo (ideally white/knockout) or a product/facility/storefront photo is ideal, and one can usually be **extracted from the source deck** (e.g. render a slide or pull an embedded image with PyMuPDF, pick a wide ~2:1 hero shot). The teal text-band is only a last-resort fallback and it duplicates the title.
-- **Tables built by the script** are native Word tables, good for straightforward financials/peers/cap tables. For complex multi-panel exhibits, charts, positioning maps, timelines, or pipelines, paste the source graphic via an `image` block (render the deck page/chart to PNG) and add a `source` line — this matches house practice.
-- Keep the voice neutral and third-person; define the short name + acronyms in quotes on first use; money as `US$`/`€`/`C$`, dates as `Mon-YY`, multiples as `x`, approximations as `~` (never the word "approximately"); attribute management claims. State an August Group view only as a neutral observation unless backed by actual diligence (see Hard style rules).
-- Use the **short** disclaimer for standard operating-company SPV deals; **long** for the Addepar-style variant.
+- **No cover by default (this is the golden look).** Page 1 is just the logo header → big bold `title` → first H1. Do **not** set `banner_image`/`facts`/`cover` for a golden-style summary. The old deck cover (hero banner → gold "INVESTMENT SUMMARY" label → 4-column facts table) is preserved but **opt-in**: set `"cover": true` (and provide `banner_image` + `facts`) only if a deal specifically wants it.
+- **Financials: golden favours pasted exhibit images over native tables.** The golden HARVEST puts its 10-year plan, cap table, and valuation benchmarks in the **Appendix as `image` exhibits** (rendered deck pages), keeping the body prose. Native teal `table` blocks are still available and fine for a compact inline summary (e.g. a small projections table), but match the golden by leaning on pasted exhibits for complex multi-panel financials, and always add a `source` line.
+- Keep the voice neutral and third-person; define the short name + acronyms in quotes on first use; **money in the company's own reporting currency** (`US$`/`€`/`C$` — e.g. the golden HARVEST reports in `C$` and the summary stays in `C$`, it does **not** convert to US$), dates as `Mon-YY`, multiples as `x`, approximations as `~` (never the word "approximately"); attribute management claims. State an August Group view only as a neutral observation unless backed by actual diligence (see Hard style rules).
+- **Disclaimer:** the default (no `variant`) is the **AGC standard** text used in the golden — use it. `variant: "short"`/`"long"` are older boilerplate kept only for legacy deals.

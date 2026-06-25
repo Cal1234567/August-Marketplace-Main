@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-build_summary.py — Render an August Group Investment Summary (.docx) in the OPERATING-COMPANY
-deck style (Addepar / Form / Radiant): teal hero banner + gold "INVESTMENT SUMMARY" label +
-4-column facts table on the cover, teal-headed data tables, and the standard section structure.
+build_summary.py — Render an August Group Investment Summary (.docx) in the house style:
+a clean titled document (logo header -> title -> sections), teal-headed data tables, and the
+standard section structure ending Considerations -> Appendix -> Disclaimer. This matches the
+golden HARVEST Clean Eats summary.
+
+The Addepar/Form/Radiant deck cover (hero banner -> gold "INVESTMENT SUMMARY" label ->
+4-column facts table) is OPT-IN: set "cover": true in the spec to enable it.
 
 Built on the Sisyphus golden template (five named styles + logo header + page-number footer).
 
@@ -16,8 +20,9 @@ SPEC (JSON)
   "filename": "Acme Robotics - Investment Summary.docx",   # optional
   "output_dir": "C:/Users/.../Desktop",                    # optional (default = cwd)
 
-  "banner_image": "C:/path/acme_logo_white.png",           # optional; else a teal band w/ the title
-  "facts": {                                               # optional cover facts table
+  "cover": false,                                          # opt-in deck cover (banner+label+facts)
+  "banner_image": "C:/path/acme_logo_white.png",           # cover only; else a teal band w/ the title
+  "facts": {                                               # cover only: 4-column facts table
       "asset_class": "Direct Investment – Growth Equity",
       "risk_level": "High",
       "minimum_investment": "$100k USD",
@@ -38,8 +43,8 @@ BLOCK TYPES
       "emphasis_rows":[1],                                 # 0-based rows to shade/bold (totals)
       "source":"Source: Acme Investor Model"}
   {"type":"source","text":"Source: ..."}        gold italic source line (for pasted images/charts)
-  {"type":"risk_factors"}                        verbatim Risk Factors section
-  {"type":"disclaimer","variant":"short"|"long"} verbatim Disclaimer section (default short)
+  {"type":"risk_factors"}                        verbatim Risk Factors section (opt-in; golden omits it)
+  {"type":"disclaimer","variant":"short"|"long"} verbatim Disclaimer (default = AGC standard; golden's)
 
 INLINE MARKUP in any "text": **bold**, *italic* (use for "(see Exhibit 1)" refs), and
   [[gap-flag]] -> renders bold dark-red on a yellow highlight. Use the gap-flag for anything
@@ -120,6 +125,25 @@ DISCLAIMER_LONG = [
     "August Group Capital is a registered Portfolio Manager with the Autorité des Marchés Financiers (Quebec), Ontario Securities "
     "Commission, Alberta Securities Commission, British Columbia Securities Commission, the Manitoba Securities Commission, and a "
     "Registered Investment Advisor with the U.S. Securities and Exchange Commission.",
+]
+# The standard, current house disclaimer (AGC-attributed) — used by the golden HARVEST
+# summary. This is the DEFAULT; "short"/"long" remain available via the block's "variant".
+# Bullets intentionally carry NO trailing period, matching the golden document exactly.
+DISCLAIMER_STANDARD = [
+    "The information herein was prepared by The August Group Capital Limited (\"AGC\") and is derived from sources AGC believes to be "
+    "reliable, including information received from the fund manager or company management. AGC makes no representations or warranties "
+    "as to accuracy, completeness or reliability of such information, and will not be held liable for any inaccuracies or misprints "
+    "derived from such information",
+    "This report is not intended to be, and should not be taken to be, an offer to sell or a solicitation of an offer to buy the "
+    "investment or investments that are the subject of the report, or any other investment. Investing your money in investment products "
+    "involves the risk of loss, and past performance of investment products is not a guarantee of future returns. Investments in "
+    "private funds are subject to a number of risks, including liquidity risk and the risk of loss of capital, and are designed for "
+    "investors who understand and are able to withstand the risks",
+    "This report is confidential and intended solely for the use of the individual or entity to whom it is addressed. Any unauthorized "
+    "review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please contact the sender and "
+    "destroy any copies that may have been inadvertently sent to you",
+    "AGC is registered as a portfolio manager in Alberta, British Columbia, Manitoba, Ontario, and Quebec, and is registered as an "
+    "investment adviser in the United States. The investment or investments that are the subject of this report are not affiliated with AGC",
 ]
 
 # --- low-level helpers -----------------------------------------------------------
@@ -311,13 +335,19 @@ def build(spec, out_path):
 
     title = (spec.get("title") or "").strip()
 
-    # Cover: banner -> title -> gold label -> facts table
-    add_banner(doc, title or "INVESTMENT SUMMARY", spec.get("banner_image"))
+    # House style (golden HARVEST summary) is a CLEAN titled document:
+    #   logo header (from template) -> title -> first H1 (Executive Summary).
+    # The Addepar/Form/Radiant deck cover (hero banner -> gold "INVESTMENT SUMMARY"
+    # label -> 4-column facts table) is now OPT-IN: set "cover": true in the spec.
+    cover = bool(spec.get("cover"))
+    if cover:
+        add_banner(doc, title or "INVESTMENT SUMMARY", spec.get("banner_image"))
     if title:
         add_runs(doc.add_paragraph(style=S_TITLE), title)
-    add_label(doc, spec.get("subtitle", "INVESTMENT SUMMARY"))
-    if spec.get("facts") is not None:
-        add_facts_table(doc, spec.get("facts") or {})
+    if cover:
+        add_label(doc, spec.get("subtitle", "INVESTMENT SUMMARY"))
+        if spec.get("facts") is not None:
+            add_facts_table(doc, spec.get("facts") or {})
 
     # Body blocks
     for blk in spec.get("blocks", []):
@@ -345,7 +375,8 @@ def build(spec, out_path):
                 p = doc.add_paragraph(style=S_BODY); add_runs(p, line); set_bullet(p, 0)
         elif t == "disclaimer":
             add_runs(doc.add_paragraph(style=S_H1), "Disclaimer")
-            lines = DISCLAIMER_LONG if blk.get("variant") == "long" else DISCLAIMER_SHORT
+            lines = {"short": DISCLAIMER_SHORT, "long": DISCLAIMER_LONG}.get(
+                blk.get("variant"), DISCLAIMER_STANDARD)
             for line in lines:
                 p = doc.add_paragraph(style=S_BODY); add_runs(p, line); set_bullet(p, 0)
         else:

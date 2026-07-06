@@ -53,6 +53,12 @@ function toRecord(plugin) {
   // Level isn't a marketplace concept; only set it when explicitly provided so
   // we never clobber a level chosen by hand in the Admin page.
   if (aug.level) record.level = aug.level;
+  // Departments get the same treatment on UPDATES: people move skills between
+  // pages by hand in the site UI, and resending manifest-derived departments on
+  // every sync silently reverted those moves. The flag lets main() strip
+  // `departments` for rows that already exist unless the plugin declares
+  // `august.departments` explicitly.
+  record.__explicitDepartments = !!aug.departments;
   return record;
 }
 
@@ -88,14 +94,38 @@ async function main() {
 
   // 1. Upsert every current plugin (insert new, update existing) keyed on slug.
   //    merge-duplicates updates only the columns we send, so manual `level`
-  //    values survive unless an entry explicitly overrides them.
+  //    values survive unless an entry explicitly overrides them. Same for
+  //    `departments`: rows that already exist keep their (possibly hand-moved)
+  //    placement unless the plugin declares `august.departments` explicitly —
+  //    only brand-new rows get the category-derived default.
   if (records.length) {
-    await sb('skills?on_conflict=slug', {
-      method: 'POST',
-      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
-      body: JSON.stringify(records),
-    });
-    console.log(`Upserted ${records.length} skill(s).`);
+    const existingRes = await sb('skills?source=eq.marketplace&select=slug');
+    const existing = new Set((await existingRes.json()).map((r) => r.slug));
+
+    const withDepartments = [];
+    const withoutDepartments = [];
+    for (const record of records) {
+      const explicit = record.__explicitDepartments;
+      delete record.__explicitDepartments;
+      if (existing.has(record.slug) && !explicit) {
+        const { departments: _dropped, ...rest } = record;
+        withoutDepartments.push(rest);
+      } else {
+        withDepartments.push(record);
+      }
+    }
+
+    for (const batch of [withDepartments, withoutDepartments]) {
+      if (!batch.length) continue;
+      await sb('skills?on_conflict=slug', {
+        method: 'POST',
+        headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify(batch),
+      });
+    }
+    console.log(
+      `Upserted ${records.length} skill(s) (${withoutDepartments.length} kept their existing page placement).`,
+    );
   }
 
   // 2. Delete marketplace-sourced rows whose plugin was removed from the repo.

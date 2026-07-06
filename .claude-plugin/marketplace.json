@@ -247,7 +247,7 @@
       "name": "council-plugin",
       "displayName": "Council",
       "source": "./plugins/productivity/council-plugin",
-      "description": "Decision council for choices with multiple defensible options: three blind persona agents (Architect, Skeptic, Pragma...",
+      "description": "Three agents argue different sides of a decision, then a chairman picks the best-argued answer. For genuine forks: build vs buy, two architectures, invest vs pass.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"
@@ -261,7 +261,7 @@
       "name": "devils-advocate-plugin",
       "displayName": "Devils Advocate",
       "source": "./plugins/productivity/devils-advocate-plugin",
-      "description": "One-turn, no-subagent counterargument against whatever position the user just staked — a lean, a plan, a read on a de...",
+      "description": "Argues the strongest honest case against the position you just took — steelman first, then the counter-case — and hands the decision back. One turn.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"
@@ -275,7 +275,7 @@
       "name": "find-unknowns-plugin",
       "displayName": "Find Unknowns",
       "source": "./plugins/productivity/find-unknowns-plugin",
-      "description": "Structured techniques for closing the gap between what the user asked for and what the work actually needs (map vs te...",
+      "description": "Surfaces what you don't know you don't know before you build — a quick interview, mock options, or a blindspot sweep, whichever fits the gap.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"
@@ -289,7 +289,7 @@
       "name": "grill-plugin",
       "displayName": "Grill",
       "source": "./plugins/productivity/grill-plugin",
-      "description": "Relentless one-question-at-a-time interrogation BEFORE anything gets built — extracts the spec that lives in the user...",
+      "description": "Interviews you one question at a time before a build, until the spec is out of your head — then hands back a tight brief to build against.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"
@@ -303,7 +303,7 @@
       "name": "premortem-plugin",
       "displayName": "Premortem",
       "source": "./plugins/productivity/premortem-plugin",
-      "description": "Kahneman-style premortem on any plan, build, or deal about to happen: assume it already FAILED months from now, then...",
+      "description": "Assume the plan already failed, then work backward: what killed it, the earliest warning signs, and the cheapest tests to run today.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"

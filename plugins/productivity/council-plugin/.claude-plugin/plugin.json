@@ -3,7 +3,7 @@
   "name": "council-plugin",
   "displayName": "Council",
   "version": "1.0.0",
-  "description": "Decision council for choices with multiple defensible options: three blind persona agents (Architect, Skeptic, Pragma...",
+  "description": "Three agents argue different sides of a decision, then a chairman picks the best-argued answer. For genuine forks: build vs buy, two architectures, invest vs pass.",
   "author": {
     "name": "August Group"
   },

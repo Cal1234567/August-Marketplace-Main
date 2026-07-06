@@ -3,7 +3,7 @@
   "name": "premortem-plugin",
   "displayName": "Premortem",
   "version": "1.0.0",
-  "description": "Kahneman-style premortem on any plan, build, or deal about to happen: assume it already FAILED months from now, then...",
+  "description": "Assume the plan already failed, then work backward: what killed it, the earliest warning signs, and the cheapest tests to run today.",
   "author": {
     "name": "August Group"
   },

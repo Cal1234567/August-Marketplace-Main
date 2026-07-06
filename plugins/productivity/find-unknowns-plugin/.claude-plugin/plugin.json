@@ -3,7 +3,7 @@
   "name": "find-unknowns-plugin",
   "displayName": "Find Unknowns",
   "version": "1.0.0",
-  "description": "Structured techniques for closing the gap between what the user asked for and what the work actually needs (map vs te...",
+  "description": "Surfaces what you don't know you don't know before you build - a quick interview, mock options, or a blindspot sweep, whichever fits the gap.",
   "author": {
     "name": "August Group"
   },

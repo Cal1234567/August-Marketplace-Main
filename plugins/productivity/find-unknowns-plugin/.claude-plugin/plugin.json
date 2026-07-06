@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "find-unknowns-plugin",
+  "displayName": "Find Unknowns",
+  "version": "1.0.0",
+  "description": "Structured techniques for closing the gap between what the user asked for and what the work actually needs (map vs te...",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "grill-plugin",
+  "displayName": "Grill",
+  "version": "1.0.0",
+  "description": "Relentless one-question-at-a-time interrogation BEFORE anything gets built — extracts the spec that lives in the user...",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

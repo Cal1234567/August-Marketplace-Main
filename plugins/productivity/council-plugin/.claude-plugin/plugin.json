@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "council-plugin",
+  "displayName": "Council",
+  "version": "1.0.0",
+  "description": "Decision council for choices with multiple defensible options: three blind persona agents (Architect, Skeptic, Pragma...",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

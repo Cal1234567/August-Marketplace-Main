@@ -242,6 +242,76 @@
         "excel",
         "offline"
       ]
+    },
+    {
+      "name": "council-plugin",
+      "displayName": "Council",
+      "source": "./plugins/productivity/council-plugin",
+      "description": "Decision council for choices with multiple defensible options: three blind persona agents (Architect, Skeptic, Pragma...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
+    },
+    {
+      "name": "devils-advocate-plugin",
+      "displayName": "Devils Advocate",
+      "source": "./plugins/productivity/devils-advocate-plugin",
+      "description": "One-turn, no-subagent counterargument against whatever position the user just staked — a lean, a plan, a read on a de...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
+    },
+    {
+      "name": "find-unknowns-plugin",
+      "displayName": "Find Unknowns",
+      "source": "./plugins/productivity/find-unknowns-plugin",
+      "description": "Structured techniques for closing the gap between what the user asked for and what the work actually needs (map vs te...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
+    },
+    {
+      "name": "grill-plugin",
+      "displayName": "Grill",
+      "source": "./plugins/productivity/grill-plugin",
+      "description": "Relentless one-question-at-a-time interrogation BEFORE anything gets built — extracts the spec that lives in the user...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
+    },
+    {
+      "name": "premortem-plugin",
+      "displayName": "Premortem",
+      "source": "./plugins/productivity/premortem-plugin",
+      "description": "Kahneman-style premortem on any plan, build, or deal about to happen: assume it already FAILED months from now, then...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
     }
   ]
 }

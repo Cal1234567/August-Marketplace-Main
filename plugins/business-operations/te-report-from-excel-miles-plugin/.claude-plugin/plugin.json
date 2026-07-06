@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "te-report-from-excel-miles-plugin",
+  "displayName": "T&E Report from Excel (Miles)",
+  "version": "1.0.0",
+  "description": "Travel & Entertainment monthly Budget vs. Actual report built from a NetSuite budget export file — no live NetSuite connection required.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/claude-plugins",
+  "skills": "./skills"
+}

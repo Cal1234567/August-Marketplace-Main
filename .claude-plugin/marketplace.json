@@ -136,6 +136,112 @@
       "tags": [
         "workflow"
       ]
+    },
+    {
+      "name": "august-annual-miles-plugin",
+      "displayName": "August Annual (Miles)",
+      "source": "./plugins/business-operations/august-annual-miles-plugin",
+      "description": "NetSuite memo transaction report — pull all transactions matching a memo string into a grouped Excel report with per-account subtotals and home-currency conversion.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "excel",
+        "transactions",
+        "reporting"
+      ]
+    },
+    {
+      "name": "ef-monthly-miles-plugin",
+      "displayName": "EF Monthly (Miles)",
+      "source": "./plugins/business-operations/ef-monthly-miles-plugin",
+      "description": "Monthly vendor expense report from NetSuite — vendor bills for a given month broken down by line with the client for each expense.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "expenses",
+        "vendor",
+        "monthly"
+      ]
+    },
+    {
+      "name": "ef-ytd-miles-plugin",
+      "displayName": "EF YTD (Miles)",
+      "source": "./plugins/business-operations/ef-ytd-miles-plugin",
+      "description": "Excel report of vendor expenses per client for a month, with both the month amount and the year-to-date total.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "expenses",
+        "vendor",
+        "ytd",
+        "excel"
+      ]
+    },
+    {
+      "name": "monthly-ef-ytd-miles-plugin",
+      "displayName": "Monthly EF YTD (Miles)",
+      "source": "./plugins/business-operations/monthly-ef-ytd-miles-plugin",
+      "description": "Excel report of vendor expenses per client for a given month with a running year-to-date view.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "expenses",
+        "vendor",
+        "ytd",
+        "excel"
+      ]
+    },
+    {
+      "name": "te-monthly-report-miles-plugin",
+      "displayName": "T&E Monthly Report (Miles)",
+      "source": "./plugins/business-operations/te-monthly-report-miles-plugin",
+      "description": "Travel & Entertainment monthly Budget vs. Actual report by department as a formatted Excel file, pulled live from NetSuite.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "t-and-e",
+        "budget",
+        "excel",
+        "reporting"
+      ]
+    },
+    {
+      "name": "te-report-from-excel-miles-plugin",
+      "displayName": "T&E Report from Excel (Miles)",
+      "source": "./plugins/business-operations/te-report-from-excel-miles-plugin",
+      "description": "Travel & Entertainment monthly Budget vs. Actual report built from a NetSuite budget export file — no live NetSuite connection required.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "netsuite",
+        "t-and-e",
+        "budget",
+        "excel",
+        "offline"
+      ]
     }
   ]
 }

@@ -312,6 +312,20 @@
       "tags": [
         "workflow"
       ]
+    },
+    {
+      "name": "august-hub-plugin",
+      "displayName": "August Hub",
+      "source": "./plugins/productivity/august-hub-plugin",
+      "description": "Talk to the August AI Hub from any chat: search the firm's skill library, see what's new this week, and file workshop...",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "workflow"
+      ]
     }
   ]
 }

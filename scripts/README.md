@@ -113,3 +113,4 @@ node scripts/sync-skills.mjs
   in the site's Admin page (`source='manual'`) are never modified or deleted.
 - Removing a plugin from `marketplace.json` removes its skill from the site on
   the next sync.
+

@@ -326,6 +326,22 @@
       "tags": [
         "workflow"
       ]
+    },
+    {
+      "name": "boc-fx-plugin",
+      "displayName": "Boc Fx",
+      "source": "./plugins/business-operations/boc-fx-plugin",
+      "description": "Retrieve official Bank of Canada USD-to-CAD daily average exchange rates and apply them to USD amounts.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Business Operations",
+      "tags": [
+        "currency",
+        "fx",
+        "bank-of-canada"
+      ]
     }
   ]
 }

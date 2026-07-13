@@ -8,8 +8,8 @@ on:
     branches: [main]
     paths:
       - '.claude-plugin/marketplace.json'
-      - 'plugins/**'
-      - 'scripts/sync-skills.mjs'
+      - 'skills/**'
+      - 'maintainers/scripts/sync-skills.mjs'
       - '.github/workflows/sync-skills.yml'
   workflow_dispatch:
 
@@ -26,4 +26,4 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           # Service-role / secret key is stored in the repo secret named SKILL_SYNC.
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SKILL_SYNC }}
-        run: node scripts/sync-skills.mjs
+        run: node maintainers/scripts/sync-skills.mjs

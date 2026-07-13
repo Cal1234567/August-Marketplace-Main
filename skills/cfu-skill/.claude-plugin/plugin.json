@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "cfu-skill-plugin",
+  "displayName": "Cfu Skill",
+  "version": "1.0.0",
+  "description": "Generate an August Group CFU (Client-Facing Update / quarterly Company & Fund Update) DOCX that matches the historica...",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

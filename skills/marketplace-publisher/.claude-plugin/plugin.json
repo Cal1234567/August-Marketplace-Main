@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "marketplace-publisher-plugin",
+  "displayName": "Marketplace Publisher",
+  "version": "1.0.0",
+  "description": "Publish skills from your Cowork workspace to the August Group marketplace",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

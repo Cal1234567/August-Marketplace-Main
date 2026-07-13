@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "investment-summary-plugin",
+  "displayName": "Investment Summary",
+  "version": "1.0.0",
+  "description": "Generate an August Group Investment Summary (.docx) for a single operating company, matching the house deck style (Ad...",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

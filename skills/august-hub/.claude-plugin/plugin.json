@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "august-hub-plugin",
+  "displayName": "August Hub",
+  "version": "1.0.0",
+  "description": "Search the skill library, see what's new, and file workshop ideas straight from chat - no site visit needed. Requires a Hub API token from Cal.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

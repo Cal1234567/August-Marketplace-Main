@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "weekly-summary-plugin",
+  "displayName": "Weekly Summary",
+  "version": "1.0.0",
+  "description": "Weekly recap of activities grouped by topic with open loops",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

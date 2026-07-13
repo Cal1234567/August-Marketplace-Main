@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "council-plugin",
+  "displayName": "Council",
+  "version": "1.0.0",
+  "description": "Three agents argue different sides of a decision, then a chairman picks the best-argued answer. For genuine forks: build vs buy, two architectures, invest vs pass.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

@@ -2,7 +2,7 @@
 name: publish-skill
 description: >-
   Publish a skill to the August Group marketplace from a Cowork session opened on
-  this claude-plugins repo. Use when the user says "publish a skill", "add a skill
+  this August Marketplace Main repo. Use when the user says "publish a skill", "add a skill
   to the marketplace", "promote X skill", or pastes a SKILL.md to publish firm-wide.
   Built for Cowork (no desktop, no ~/.claude/skills): it creates the plugin files,
   generalizes the language, updates the marketplace manifest, and commits — all in
@@ -14,7 +14,7 @@ description: >-
 Publishes a skill into this marketplace so the whole firm can install it from
 Browse plugins in Cowork. Everything happens inside THIS repo — no desktop Claude
 Code and no personal `~/.claude/skills` folder required. This replicates the
-desktop `scripts/promote-skill.ps1` flow using direct file edits, because Cowork
+desktop `maintainers/scripts/promote-skill.ps1` flow using direct file edits, because Cowork
 can't run that script or read a personal skills folder.
 
 ## Inputs (ask for any that are missing, together in one message)
@@ -45,7 +45,7 @@ can't run that script or read a personal skills folder.
    - `site description` = the first sentence of the description, trimmed to ~120 chars
 
 4. **Create the plugin files** in this repo:
-   - `plugins/<subdir>/<plugin-name>/.claude-plugin/plugin.json`:
+   - `skills/<slug>/.claude-plugin/plugin.json`:
      ```json
      {
        "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
@@ -54,11 +54,11 @@ can't run that script or read a personal skills folder.
        "version": "1.0.0",
        "description": "<site description>",
        "author": { "name": "August Group" },
-       "repository": "https://github.com/Cal1234567/claude-plugins",
+       "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
        "skills": "./skills"
      }
      ```
-   - `plugins/<subdir>/<plugin-name>/skills/<slug>/SKILL.md` — the generalized
+   - `skills/<slug>/skills/<slug>/SKILL.md` — the generalized
      skill, with its frontmatter `name:` set to `<slug>` and any `(PERSONAL)`
      marker stripped.
 
@@ -69,7 +69,7 @@ can't run that script or read a personal skills folder.
    {
      "name": "<plugin-name>",
      "displayName": "<Display Name>",
-     "source": "./plugins/<subdir>/<plugin-name>",
+     "source": "./skills/<slug>",
      "description": "<site description>",
      "version": "1.0.0",
      "author": { "name": "August Group" },

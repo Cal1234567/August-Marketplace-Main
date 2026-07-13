@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "find-unknowns-plugin",
+  "displayName": "Find Unknowns",
+  "version": "1.0.0",
+  "description": "Surfaces what you don't know you don't know before you build - a quick interview, mock options, or a blindspot sweep, whichever fits the gap.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

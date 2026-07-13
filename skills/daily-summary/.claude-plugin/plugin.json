@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "daily-summary-plugin",
+  "displayName": "Daily Summary",
+  "version": "1.0.0",
+  "description": "End-of-day debrief pulling Teams, Outlook calendar, and email",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

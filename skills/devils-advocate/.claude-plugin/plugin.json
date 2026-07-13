@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "devils-advocate-plugin",
+  "displayName": "Devils Advocate",
+  "version": "1.0.0",
+  "description": "Argues the strongest honest case against the position you just took - steelman first, then the counter-case - and hands the decision back. One turn.",
+  "author": {
+    "name": "August Group"
+  },
+  "repository": "https://github.com/Cal1234567/August-Marketplace-Main",
+  "skills": "./skills"
+}

@@ -108,10 +108,10 @@
       ]
     },
     {
-      "name": "marketplace-publisher-plugin",
-      "displayName": "Marketplace Publisher",
-      "source": "./skills/marketplace-publisher",
-      "description": "Publish skills from your Cowork workspace to the August Group marketplace",
+      "name": "publish-to-august-main-plugin",
+      "displayName": "Publish to August Marketplace",
+      "source": "./skills/publish-to-august-main",
+      "description": "Add a Cowork skill to August Marketplace — Main without using Git.",
       "version": "1.0.0",
       "author": {
         "name": "August Group"

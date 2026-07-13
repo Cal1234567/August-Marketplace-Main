@@ -10,7 +10,7 @@ Choose a skill folder below. Each opens with a short explanation and a direct li
 | [Check In](./check-in/) | Mid-task gut check on whether the current path is the right one, with independent critic subagents and clearly laid-out alternatives |
 | [Say Back](./say-back/) | Makes the agent state its plan before acting — the user confirms before any action is taken. |
 | [Cfu Skill](./cfu-skill/) | Generate an August Group CFU (Client-Facing Update / quarterly Company & Fund Update) DOCX that matches the historica... |
-| [Marketplace Publisher](./marketplace-publisher/) | Publish skills from your Cowork workspace to the August Group marketplace |
+| [Publish to August Marketplace](./publish-to-august-main/) | Add a Cowork skill to August Marketplace — Main without using Git. |
 | [Investment Summary](./investment-summary/) | Generate an August Group Investment Summary (.docx) for a single operating company, matching the house deck style (Ad... |
 | [Council](./council/) | Three agents argue different sides of a decision, then a chairman picks the best-argued answer. For genuine forks: build vs buy, two architectures, invest vs pass. |
 | [Devils Advocate](./devils-advocate/) | Argues the strongest honest case against the position you just took — steelman first, then the counter-case — and hands the decision back. One turn. |

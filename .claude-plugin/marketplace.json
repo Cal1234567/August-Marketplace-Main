@@ -236,6 +236,23 @@
         "fx",
         "bank-of-canada"
       ]
+    },
+    {
+      "name": "plan-azure-site-plugin",
+      "displayName": "Plan Azure Site",
+      "source": "./skills/plan-azure-site",
+      "description": "Inspect an internal site and produce an Azure hosting, migration, IT handoff, and shareable PDF plan.",
+      "version": "1.0.0",
+      "author": {
+        "name": "August Group"
+      },
+      "category": "Productivity",
+      "tags": [
+        "azure",
+        "hosting",
+        "architecture",
+        "migration"
+      ]
     }
   ]
 }

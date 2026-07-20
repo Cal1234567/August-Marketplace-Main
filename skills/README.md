@@ -19,3 +19,4 @@ Choose a skill folder below. Each opens with a short explanation and a direct li
 | [Premortem](./premortem/) | Assume the plan already failed, then work backward: what killed it, the earliest warning signs, and the cheapest tests to run today. |
 | [August Hub](./august-hub/) | Search the skill library, see what's new, and file workshop ideas straight from chat — no site visit needed. Requires a Hub API token from Cal. |
 | [Boc Fx](./boc-fx/) | Retrieve official Bank of Canada USD-to-CAD daily average exchange rates and apply them to USD amounts. |
+| [Plan Azure Site](./plan-azure-site/) | Inspect an internal site and produce an Azure hosting, migration, IT handoff, and shareable PDF plan. |
